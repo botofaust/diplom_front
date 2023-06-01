@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import LoginComponent from './components/LoginComponent';
+import MachineTableComponent from './components/MachineTableComponent';
+import NavigatorComponent from './components/NavigatorComponent';
+import MaintenanceTableComponent from './components/MaintenanceTableComponent';
+import { NAV_ITEMS } from './components/NAV_ITEMS';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [page, setPage] = useState(NAV_ITEMS.homePage)
+
+  const loggedSetter = (logged) => {
+    setIsLoggedIn(logged)
+  }
+  
+  const changePage = (page) => {
+    setPage(page)
+  }
+
+  return(
+    <div>
+      <LoginComponent loggedSetter={loggedSetter}/>
+      <NavigatorComponent changePage={changePage}/>
+      {(page == NAV_ITEMS.machinePage)? <MachineTableComponent /> : ''}
+      {(page == NAV_ITEMS.maintenancePage)? <MaintenanceTableComponent /> : ''}
     </div>
-  );
+  )     
 }
 
 export default App;
